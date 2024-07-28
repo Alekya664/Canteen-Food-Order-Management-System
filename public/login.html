@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body background="https://img.freepik.com/free-photo/flat-lay-arrangement-with-salad-box-sauce_23-2148247883.jpg">
+    <section class="login">
+        <div class="container">
+            <form id="login-form">
+                <h1>LOGIN</h1>
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" class="username" name="username" required><br><br>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" class="password" name="password" required><br><br>
+                </div>
+                <div class="form-group">
+                    <label for="role">Role</label>
+                    <select class="role" name="role" required>
+                        <option value="Student/Faculty">User</option>
+                        <option value="kitchen_staff">Kitchen Staff</option>
+                    </select>
+                </div>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const loginForm = document.getElementById('login-form');
+            //const roleSelect = document.getElementById('role');
+            var username=document.querySelector(".username");
+            var password=document.querySelector(".password");
+            var role=document.querySelector(".role");
+
+            loginForm.addEventListener('submit', function(event) {
+                event.preventDefault(); // Prevent form submission
+
+                const selectedRole = role.value;
+                let actionUrl = ''; // Set the action URL based on the selected role
+
+                if (selectedRole === 'Student/Faculty') {
+                    actionUrl = 'menu.html'; // Redirect to menu.html for admin, faculty, and student
+                } else if (selectedRole === 'kitchen_staff') {
+                    actionUrl = 'kitchen_staff.html'; // Redirect to kitchen_staff.html for kitchen staff
+                }
+
+                window.location.href = actionUrl; // Redirect to the determined URL
+
+                var obj = {
+                    username:username.value,
+                    password:password.value,
+                    role:role.value
+                };
+
+                fetch("/login",{
+                    method:"POST",
+                    headers:{
+                        "Content-type":"application/json"
+                    },
+                    body:JSON.stringify(obj)
+                })
+            });
+        });
+    </script>
+</body>
+</html>

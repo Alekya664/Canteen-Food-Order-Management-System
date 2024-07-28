@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Menu</title>
+    <link rel="stylesheet" href="menu.css">
+    <script src="menu.js"></script>
+</head>
+<body bgcolor="pink" background="https://img.freepik.com/free-photo/flat-lay-arrangement-with-salad-box-sauce_23-2148247883.jpg" >
+    <div id="sectionMenu">
+
+    </div>
+    <header>
+        <h1>Menu</h1>
+    </header>
+    <main>
+        <section class="menu">
+            <section id="menu">
+                <h2>Menu</h2>
+                <ul id="menu-items">
+                    <!-- Menu items will be dynamically generated here -->
+                </ul>
+            </section>
+           <section id="total">
+                <h2>Total</h2>
+                <button id="total-btn">Total</button>
+            </section>
+            <section id="cart">
+                <ul id="cart-items-list">
+                    <!-- Cart items will be added here -->
+                </ul>
+            </section>
+                <h2>Cart</h2>
+                <ul id="cart-items">
+                    <!-- Cart items will be dynamically generated here -->
+                </ul>
+                <button id="checkout-btn">Order-ID</button>
+                <p id="order-id">Order ID: </p>
+                <input type="submit" value="Submit" name="submit-btn" onclick="redirectToSuccessPage()">
+                <script>
+                    function redirectToSuccessPage() {
+                        window.location.href = "success.html";
+                    }
+                    //const form = document.getElementById('add_menu_item_form');
+                    button.addEventListener('submit', async (event) => {
+                        event.preventDefault();
+
+                        const cart = document.getElementById('cart-items').value;
+                        const orderid = document.getElementById('order-id').value;
+                        const total = document.getElementById('total').value;
+
+                        try {
+                            const response = await fetch('/add_menu_item', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ cart,orderid,total })
+                            });
+
+                            if (response.ok) {
+                                alert('Menu item added successfully');
+                            } else {
+                                alert('Failed to add menu item');
+                            }
+                        } catch (err) {
+                            console.error(err);
+                            alert('Server error');
+                        }
+                    });
+
+                </script>
+                
+            </section>
+        </section>
+    </main>
+</body>
+</html>
